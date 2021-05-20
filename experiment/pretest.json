@@ -1,18 +1,39 @@
 [
-{"question":"This is a Sample Question 1?",
+{"question":"1. If f ang g are two images, Fourier transform of f*g is",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"F.G",
+            "b":"F+G",
+            "c":"F-G",
+            "d":"G-F"
           },
 "correctAnswer":"a"},
-{"question":"This is a Sample Question 2?",
+
+{"question":"2. F[0,0] is equal to",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"mean to the spatial image",
+            "b":"mean of the fourier image",
+            "c":"mean of the magnitude spectrum",
+            "d":"mean of the phase spectrum"
           },
-"correctAnswer":"c"} 
+"correctAnswer":"c"},
+
+{"question":"3. Basic functions of the fourier transform",
+"answers":{
+            "a":"pure sinusoidal functions",
+            "b":"tangential functions",
+            "c":"ramp functions",
+            "d":"step functions"
+          },
+"correctAnswer":"a"},
+
+{"question":"If f and g are two images, Fourier transform of f+g is",
+"answers":{
+            "a":"F.G",
+            "b":"F+G",
+            "c":"F-G",
+            "d":"G_F"
+          },
+"correctAnswer":"c"},
+
+ 
 ]
