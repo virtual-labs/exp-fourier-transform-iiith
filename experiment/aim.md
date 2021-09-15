@@ -1,1 +1,3 @@
-### Aim of the experiment
+A number can be represented in many ways such as decimal, binary, hexadecimal etc. (ex. 15<sub>dec</sub> = 1111<sub>binary</sub> = F<sub>hex</sub>). Likewise, a signal can also be represented in many ways that are more convenient for certain types of analysis. The most common representation is the Fourier transform which converts a spatial domain image into a spatial-frequency domain representation.
+
+The Fourier transform (FT) is a way to express the image&#194; in terms of a set of pure sinusoidal functions. It transforms the image from spatial domain to frequency domain. In FT image , each pixel represents a particular frequency contained in spatial domain image.
