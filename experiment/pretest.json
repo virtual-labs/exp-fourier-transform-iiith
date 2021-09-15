@@ -26,14 +26,13 @@
           },
 "correctAnswer":"a"},
 
-{"question":"If f and g are two images, Fourier transform of f+g is",
+{"question":"4. If f and g are two images, Fourier transform of f+g is",
 "answers":{
             "a":"F.G",
             "b":"F+G",
             "c":"F-G",
             "d":"G_F"
           },
-"correctAnswer":"c"},
-
+"correctAnswer":"c"}
  
 ]
