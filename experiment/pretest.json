@@ -15,25 +15,6 @@
             "c":"mean of the magnitude spectrum",
             "d":"mean of the phase spectrum"
           },
-"correctAnswer":"c"},
-
-{"question":"3. Basic functions of the fourier transform",
-"answers":{
-            "a":"pure sinusoidal functions",
-            "b":"tangential functions",
-            "c":"ramp functions",
-            "d":"step functions"
-          },
-"correctAnswer":"a"},
-
-{"question":"If f and g are two images, Fourier transform of f+g is",
-"answers":{
-            "a":"F.G",
-            "b":"F+G",
-            "c":"F-G",
-            "d":"G_F"
-          },
-"correctAnswer":"c"},
-
+"correctAnswer":"c"}
  
 ]
