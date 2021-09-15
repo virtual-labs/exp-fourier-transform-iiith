@@ -69,4 +69,4 @@ The first and second images are the original and FT of lena image respectively. 
 Similarly, Highpass filtered image can be obtained by suppressing the value at DC in Fourier image as shown below.
 
 
-<img src="images/theory_html_m718278d8.png"> <img src="images/theory_html_m6a7b55a1.jpg""> <img  src="images/theory_html_m56f89689.png""> <img src="images/theory_html_5ba2a9d7.png">
+<img src="images/theory_html_m718278d8.png"> <img src="images/theory_html_m6a7b55a1.jpg"> <img  src="images/theory_html_m56f89689.png"> <img src="images/theory_html_5ba2a9d7.png">
