@@ -8,29 +8,29 @@ Steps to run experiment:
 
 1. Select image from the mosaic using 'select image' option
 
-   1.  Select region of the image to load it in the input image panel
+   a.  Select region of the image to load it in the input image panel
 
 2. Select one option from 'Forward Fourier Transform' and 'Importance of phase'
 
-   1. For 'Forward Fourier Transform' 
+   a. For 'Forward Fourier Transform' 
 
-      1. Press 'Run'.
+      i. Press 'Run'.
 
    2. For 'Importance of phase'
 
-      1. Select one option
+      a. Select one option
 
-         - Choice 1
+         i. Choice 1
 
-         - Choice 2
+         ii. Choice 2
 
-         - Choice 3
+         iii. Choice 3
 
-         - Choice 4
+         iv. Choice 4
 
-         - Choice 5
+         v. Choice 5
 
-         - Choice 6
+         vi. Choice 6
 
 3. Press 'Run'.
 
