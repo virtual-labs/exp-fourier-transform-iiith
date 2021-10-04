@@ -29,7 +29,7 @@ if(isset($_GET["assess"])) {
 <!-- This file was originally generated at http://psd2cssonline.com on September 16, 2010, 10:04 am -->
 <!-- psd2css Online version 1.85 -->
 
-<title>Virtual Lab in Image Processing</title>
+<!--<title>Virtual Lab in Image Processing</title>-->
 
 <!-- Some META tags to help with Search Engine Optimization.  Please 
 note however that META tags are NOT a magic bullet to get your web page
@@ -447,11 +447,11 @@ $("#sliderContent").replaceWith('      <div id="sliderContent" class="ui-corner-
     <div id="Layer-3" class="TopBar_jpg"  >
       <img src="images/Layer-3.jpg" width="894" height="96" alt="TopBar" />
       <!-- This is 'IIIT' -->
-      <div id="Layer-6" class="IIIT"  >
+   <!--   <div id="Layer-6" class="IIIT"  >
         <img src="images/iiit.png" width="100" height="70" alt="IIIT" class="pngimg" />
-	</div>
+	</div>-->
 	
-			<div id="topMenu">
+		<!--	<div id="topMenu">
 			<h1 style="text-align: center;">Virtual Lab for IMAGE PROCESSING</h1>
 <div class="home">
 <a onclick="confirmTo('index.html')">home</a>
@@ -474,7 +474,7 @@ $("#sliderContent").replaceWith('      <div id="sliderContent" class="ui-corner-
 					<li><a href="assign.php?exp=fourier">Assignment</a></li>
 			   </ul>
 
-</li>
+</li>-->
 <!--
 <li><a href="references.php?exp=fourier" target="_self" >References</a>
 </li>
