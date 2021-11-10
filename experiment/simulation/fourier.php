@@ -466,8 +466,8 @@ $("#sliderContent").replaceWith('      <div id="sliderContent" class="ui-corner-
 </li>
 <li><a href="procedure.php?exp=fourier" target="_self" >Procedure</a>
 </li> -->
-<li><sel><a href="fourier.php" target="_self" >Experiment</a>
-</sel></li>
+<!-- <li><sel><a href="fourier.php" target="_self" >Experiment</a>
+</sel></li> -->
 <!-- <li><a href="#" target="_self" >Assessment</a>
 				<ul>
 					<li><a href="quiz.php?exp=fourier">Quiz</a></li>
