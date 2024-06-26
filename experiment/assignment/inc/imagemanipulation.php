@@ -26,9 +26,7 @@ class ImageManipulation {
 	 *
 	 * @var array
 	 */
-	public $image = array('targetx'=>0, 
-							'targety'=>0,
-							'quality'=>75);
+	public $image = ['targetx'=>0, 'targety'=>0, 'quality'=>75];
 	
 	/**
 	 * A boolean value to detect if an image has not been created. This
@@ -46,7 +44,7 @@ class ImageManipulation {
      *
      * @param string $imgFile The image filename.
      */
-	public function ImageManipulation($imgfile)
+	public function __construct($imgfile)
 	{
 		//detect image format
 		$this->image["format"] = preg_replace('/^.*\.([^.]+)$/D', '$1', $imgfile);
@@ -88,7 +86,7 @@ class ImageManipulation {
      *
      * @param int $height The height of the image.
      */
-	public function setImageHeight($height=100)
+	public function setImageHeight($height=100): void
 	{
 		//height
 		$this->image["sizey_thumb"] = $height;
@@ -101,7 +99,7 @@ class ImageManipulation {
      *
      * @param int $size The width of the image.
      */
-	public function setImageWidth($width=100)
+	public function setImageWidth($width=100): void
 	{
 		//width
 		$this->image["sizex_thumb"]  = $width;
@@ -114,7 +112,7 @@ class ImageManipulation {
      *
      * @param int $size The maximum size of the image.
      */
-	public function resize($size=100)
+	public function resize($size=100): void
 	{
 		if ( $this->image["sizex"] >= $this->image["sizey"] ) {
 			$this->image["sizex_thumb"]  = $size;
@@ -135,7 +133,7 @@ class ImageManipulation {
 	 * @param int $w The width of the crop from the x and y coordinates.
      * @param int $h The height of the crop from the x and y coordinates.
      */
-	public function setCrop($x, $y, $w, $h)
+	public function setCrop($x, $y, $w, $h): void
 	{
 		$this->image["targetx"] = $x;
 		$this->image["targety"] = $y;
@@ -148,7 +146,7 @@ class ImageManipulation {
      *
      * @param int $quality The quality of the JPEG image.
      */
-	public function setJpegQuality($quality=75)
+	public function setJpegQuality($quality=75): void
 	{
 		//jpeg quality
 		$this->image["quality"] = $quality;
@@ -157,7 +155,7 @@ class ImageManipulation {
 	/**
      * Shows the image to a browser. Sets the correct image format in a header.
      */
-	public function show()
+	public function show(): void
 	{
 		//show thumb
 		header("Content-Type: image/".$this->image["format"]);
@@ -183,7 +181,7 @@ class ImageManipulation {
      * Private method to run the imagecopyresampled() function with the parameters that have been set up.
 	 * This method is used by the save() and show() methods.
      */
-	private function createResampledImage()
+	private function createResampledImage(): void
 	{
 		/* change ImageCreateTrueColor to ImageCreate if your GD not supported ImageCreateTrueColor function*/
 		if ( isset($this->image["sizex_thumb"]) && isset($this->image["sizey_thumb"]) ) {		
@@ -200,7 +198,7 @@ class ImageManipulation {
 	 *
 	 * @param string $save The new image filename.
      */	
-	public function save($save="")
+	public function save($save=""): void
 	{
 		//save thumb
 		if ( empty($save) ) {
