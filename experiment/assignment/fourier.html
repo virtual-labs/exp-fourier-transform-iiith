@@ -116,6 +116,11 @@ at http://jquery.com
             blinker(10)
             break
           case 1:
+            if (assess) {
+              loadImage('images/assess/fourier1_1.png').then((cImage) => {
+                croppedImage = cImage
+              })
+            }
             $('#nextBox').html(
               "image, select appropriate parameters and click on 'Run'."
             )
