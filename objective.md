@@ -1,0 +1,1 @@
+The main objective of this experiment is to understand some of the fundamental properties of the Fourier transform.
