@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fourier Transform Simulation</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        --bg: #f3f5f8;
+        --panel: #ffffff;
+        --border: #d4d9e0;
+        --accent: #1f6feb;
+        --muted: #5d6470;
+        --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: var(--bg);
+        color: #1f2937;
+      }
+
+      .app {
+        max-width: 1200px;
+        margin: 28px auto;
+        padding: 20px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px 20px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid var(--border);
+        background: #f8fafc;
+        color: #111827;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: 1.3fr 0.8fr 0.8fr;
+        gap: 18px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        border-radius: 12px;
+        padding: 14px;
+        min-height: 260px;
+      }
+
+      .panel h3 {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+        margin: 0 0 12px;
+        font-size: 1.1rem;
+      }
+
+      .dims {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--muted);
+      }
+
+      .mosaic-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #293541;
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      #Mosaic {
+        position: relative;
+      }
+
+      #Mosaic-img {
+        position: relative;
+        z-index: 1;
+        display: block;
+        max-width: 100%;
+        max-height: 420px;
+        border-radius: 8px;
+        user-select: none;
+        -webkit-user-drag: none;
+        touch-action: none;
+      }
+
+      .selection-overlay {
+        position: absolute;
+        border: 2px solid #3b82f6;
+        background: rgba(59, 130, 246, 0.18);
+        pointer-events: none;
+        display: none;
+        z-index: 20;
+      }
+
+      .image-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 240px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: linear-gradient(180deg, #f8fafc, #eef2f7);
+        overflow: hidden;
+      }
+
+      .image-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: inherit;
+      }
+
+      .controls {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 20px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px 18px;
+      }
+
+      .group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .group h3 {
+        margin: 0 0 6px;
+      }
+
+      .group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+      }
+
+      .inline-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+      }
+
+      fieldset {
+        margin: 0;
+        padding: 10px 12px 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+
+      legend {
+        padding: 0 6px;
+        font-weight: 600;
+      }
+
+      .slider-row {
+        display: grid;
+        grid-template-columns: 9.5rem 1fr 4.5rem;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+        color: var(--muted);
+      }
+
+      .slider-row input[type="range"] {
+        width: 100%;
+      }
+
+      .slider-row input[type="number"] {
+        width: 100%;
+        padding: 4px 6px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font: inherit;
+      }
+
+      .hint {
+        margin: 6px 0 0;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .equation {
+        margin: 4px 0 0;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+      }
+
+      .option-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        justify-content: start;
+        gap: 4px 16px;
+        margin: 6px 0 0;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .stats div {
+        display: contents;
+      }
+
+      .stats dt {
+        font-weight: 600;
+      }
+
+      .stats dd {
+        margin: 0;
+      }
+
+      .steps {
+        margin-top: 18px;
+      }
+
+      .steps-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .steps-grid figure {
+        margin: 0;
+        width: 150px;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .steps-grid img {
+        display: block;
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #eef2f7;
+      }
+
+      .status {
+        margin-top: 16px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+
+      @media (max-width: 900px) {
+        .app {
+          margin: 0 auto;
+          padding: 16px;
+        }
+
+        .topbar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .workspace,
+        .controls {
+          grid-template-columns: 1fr;
+        }
+
+        .slider-row {
+          grid-template-columns: 1fr 4.5rem;
+        }
+
+        .slider-row > span {
+          grid-column: 1 / -1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="topbar">
+        <div class="toolbar">
+          <button id="button1" type="button">Select Image</button>
+          <button id="button4" type="button">Reset</button>
+          <button id="button2" type="button" class="primary">Run</button>
+        </div>
+        <div id="status" class="status">OpenCV is being initialized…</div>
+      </div>
+
+      <div class="workspace">
+        <div id="Mosaic" class="panel">
+          <h3>Mosaic</h3>
+          <div class="mosaic-wrap">
+            <img
+              id="Mosaic-img"
+              src="images/Mosaic.png"
+              alt="Mosaic"
+              draggable="false"
+            />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Input Image <span id="inputDims" class="dims">— × —</span></h3>
+          <div class="image-box">
+            <img id="layer4Image" src="images/Layer-4.jpg" alt="Selected input" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>
+            Output Spectrum <span id="outputDims" class="dims">— × —</span>
+          </h3>
+          <div class="image-box">
+            <img id="layer5outputImage" src="images/Layer-5.jpg" alt="Output" />
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="group">
+          <h3>Operation</h3>
+          <label
+            ><input type="radio" name="operation" value="forward" checked />
+            Forward Fourier Transform</label
+          >
+
+          <fieldset>
+            <legend>Spectrum to display</legend>
+            <div class="option-list">
+              <label
+                ><input type="radio" name="view" value="logMagnitude" checked />
+                Log magnitude: log(1 + |F|)</label
+              >
+              <label
+                ><input type="radio" name="view" value="magnitude" /> Magnitude:
+                |F|</label
+              >
+              <label
+                ><input type="radio" name="view" value="phase" /> Phase:
+                ∠F</label
+              >
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Layout</legend>
+            <label
+              ><input id="centred" type="checkbox" checked /> Centre the
+              spectrum (zero frequency in the middle)</label
+            >
+          </fieldset>
+        </div>
+
+        <div class="group">
+          <h3>About the Output</h3>
+          <p class="equation">
+            F(k, l) = Σ<sub>x</sub> Σ<sub>y</sub> f(x, y) · e<sup>−j2π(kx/M +
+            ly/N)</sup>
+          </p>
+          <p id="viewFormula" class="equation"></p>
+          <p id="viewHint" class="hint"></p>
+          <dl id="spectrumInfo" class="stats"></dl>
+        </div>
+      </div>
+
+      <div class="panel steps">
+        <h3>Intermediate Results</h3>
+        <div id="stepsGrid" class="steps-grid">
+          <p class="hint">Run the transform to see the spectra here.</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/opencv.js"></script>
+    <script type="text/javascript">
+      const app = {
+        mosaicMat: null,
+        inputGray: null,
+        processedImage: null,
+        selection: null,
+        dragging: false,
+        startPoint: null,
+        currentPoint: null,
+      };
+
+      const mosaic = document.getElementById("Mosaic");
+      const mosaicWrap = document.querySelector(".mosaic-wrap");
+      const mosaicImg = document.getElementById("Mosaic-img");
+      const inputImg = document.getElementById("layer4Image");
+      const outputImg = document.getElementById("layer5outputImage");
+      const statusEl = document.getElementById("status");
+      const selectionOverlay = document.createElement("div");
+      selectionOverlay.className = "selection-overlay";
+      mosaicWrap.appendChild(selectionOverlay);
+
+      function safeDelete(mat) {
+        if (mat && typeof mat.delete === "function" && !mat.isDeleted()) {
+          mat.delete();
+        }
+      }
+
+      function setStatus(message, isError) {
+        statusEl.textContent = message;
+        statusEl.style.background = isError ? "#fef2f2" : "#eff6ff";
+        statusEl.style.color = isError ? "#b91c1c" : "#1d4ed8";
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      /* ---------- Mosaic selection (native pointer / touch events) ---------- */
+
+      function placeSelectionOverlay(displayX, displayY, displayW, displayH) {
+        const wrapRect = mosaicWrap.getBoundingClientRect();
+        const imageRect = mosaicImg.getBoundingClientRect();
+        const offsetX = imageRect.left - wrapRect.left;
+        const offsetY = imageRect.top - wrapRect.top;
+
+        selectionOverlay.style.left = offsetX + displayX + "px";
+        selectionOverlay.style.top = offsetY + displayY + "px";
+        selectionOverlay.style.width = displayW + "px";
+        selectionOverlay.style.height = displayH + "px";
+      }
+
+      function getSelectionPoint(event) {
+        const source = event.touches?.[0] || event.changedTouches?.[0] || event;
+        return {
+          clientX: source.clientX,
+          clientY: source.clientY,
+        };
+      }
+
+      function beginSelection(event) {
+        if (app.dragging) return;
+        if (
+          event.type === "mousedown" &&
+          event.button !== 0 &&
+          event.which !== 1
+        ) {
+          return;
+        }
+        event.preventDefault();
+
+        const point = getSelectionPoint(event);
+        const rect = mosaicImg.getBoundingClientRect();
+        const localX = clamp(point.clientX - rect.left, 0, rect.width);
+        const localY = clamp(point.clientY - rect.top, 0, rect.height);
+
+        app.dragging = true;
+        app.startPoint = {
+          x: localX * (mosaicImg.naturalWidth / rect.width),
+          y: localY * (mosaicImg.naturalHeight / rect.height),
+        };
+        app.currentPoint = { ...app.startPoint };
+
+        placeSelectionOverlay(localX, localY, 0, 0);
+        selectionOverlay.style.display = "block";
+
+        setStatus("Drag across the mosaic to create a crop region.");
+      }
+
+      function moveSelection(event) {
+        if (!app.dragging || !app.startPoint) return;
+
+        event.preventDefault();
+        const point = getSelectionPoint(event);
+
+        const rect = mosaicImg.getBoundingClientRect();
+        const scaleX = mosaicImg.naturalWidth / rect.width;
+        const scaleY = mosaicImg.naturalHeight / rect.height;
+        const localX = clamp(point.clientX - rect.left, 0, rect.width);
+        const localY = clamp(point.clientY - rect.top, 0, rect.height);
+
+        const x = localX * scaleX;
+        const y = localY * scaleY;
+        app.currentPoint = { x, y };
+
+        const x1 = Math.min(app.startPoint.x, x);
+        const y1 = Math.min(app.startPoint.y, y);
+        const x2 = Math.max(app.startPoint.x, x);
+        const y2 = Math.max(app.startPoint.y, y);
+
+        placeSelectionOverlay(
+          x1 / scaleX,
+          y1 / scaleY,
+          (x2 - x1) / scaleX,
+          (y2 - y1) / scaleY,
+        );
+      }
+
+      function finalizeSelection(event) {
+        if (!app.dragging) return;
+
+        if (event) {
+          event.preventDefault();
+          moveSelection(event);
+        }
+
+        const x1 = Math.min(app.startPoint.x, app.currentPoint.x);
+        const y1 = Math.min(app.startPoint.y, app.currentPoint.y);
+        const x2 = Math.max(app.startPoint.x, app.currentPoint.x);
+        const y2 = Math.max(app.startPoint.y, app.currentPoint.y);
+
+        app.dragging = false;
+        selectionOverlay.style.display = "none";
+
+        if (x2 - x1 < 5 || y2 - y1 < 5) {
+          setStatus(
+            "Selection is too small. Drag a larger region on the mosaic.",
+            true,
+          );
+          return;
+        }
+
+        const left = clamp(Math.round(x1), 0, mosaicImg.naturalWidth - 1);
+        const top = clamp(Math.round(y1), 0, mosaicImg.naturalHeight - 1);
+        app.selection = {
+          x1: left,
+          y1: top,
+          width: clamp(Math.round(x2 - x1), 1, mosaicImg.naturalWidth - left),
+          height: clamp(Math.round(y2 - y1), 1, mosaicImg.naturalHeight - top),
+        };
+
+        cropFromSelection(app.selection);
+      }
+
+      function setupMosaicSelection() {
+        mosaicImg.addEventListener("pointerdown", (event) => {
+          beginSelection(event);
+          if (app.dragging && mosaicImg.setPointerCapture) {
+            mosaicImg.setPointerCapture(event.pointerId);
+          }
+        });
+        mosaicImg.addEventListener("pointermove", moveSelection);
+        mosaicImg.addEventListener("pointerup", finalizeSelection);
+        mosaicImg.addEventListener("pointercancel", finalizeSelection);
+        mosaicImg.addEventListener("mousedown", beginSelection);
+        mosaicImg.addEventListener("mousemove", moveSelection);
+        window.addEventListener("mouseup", finalizeSelection);
+        mosaicImg.addEventListener("touchstart", beginSelection, {
+          passive: false,
+        });
+        mosaicImg.addEventListener("touchmove", moveSelection, {
+          passive: false,
+        });
+        mosaicImg.addEventListener("touchend", finalizeSelection, {
+          passive: false,
+        });
+        mosaicImg.addEventListener("touchcancel", finalizeSelection, {
+          passive: false,
+        });
+      }
+
+      /* ---------- Image I/O ---------- */
+
+      function loadImage(url) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = "Anonymous";
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            const imageData = ctx.getImageData(0, 0, img.width, img.height);
+            const mat = new cv.Mat(
+              imageData.height,
+              imageData.width,
+              cv.CV_8UC4,
+            );
+            mat.data.set(imageData.data);
+            resolve(mat);
+          };
+          img.onerror = (err) => reject(err);
+          img.src = url;
+        });
+      }
+
+      function matToDataUrl(mat) {
+        const canvas = document.createElement("canvas");
+        cv.imshow(canvas, mat);
+        return canvas.toDataURL();
+      }
+
+      function setDims(id, width, height) {
+        document.getElementById(id).textContent =
+          width && height ? width + " × " + height : "— × —";
+      }
+
+      function cropFromSelection(selection) {
+        if (!app.mosaicMat) {
+          setStatus("The mosaic image has not loaded yet.", true);
+          return;
+        }
+
+        const rect = new cv.Rect(
+          selection.x1,
+          selection.y1,
+          selection.width,
+          selection.height,
+        );
+        const roi = app.mosaicMat.roi(rect);
+        const gray = new cv.Mat();
+        cv.cvtColor(roi, gray, cv.COLOR_RGBA2GRAY);
+        roi.delete();
+
+        safeDelete(app.inputGray);
+        app.inputGray = gray;
+        inputImg.src = matToDataUrl(gray);
+        setDims("inputDims", gray.cols, gray.rows);
+
+        safeDelete(app.processedImage);
+        app.processedImage = null;
+        outputImg.src = "images/Layer-5.jpg";
+        setDims("outputDims");
+        clearSteps();
+        document.getElementById("spectrumInfo").innerHTML = "";
+
+        setStatus(
+          "Input region selected (" +
+            gray.cols +
+            " × " +
+            gray.rows +
+            "). Choose the spectrum to display and click Run.",
+        );
+      }
+
+      /* ---------- Controls ---------- */
+
+      function getCheckedValue(name) {
+        return document.querySelector('input[name="' + name + '"]:checked')
+          ?.value;
+      }
+
+      function setChecked(name, value) {
+        document.querySelector(
+          'input[name="' + name + '"][value="' + value + '"]',
+        ).checked = true;
+      }
+
+      function readParams() {
+        return {
+          view: getCheckedValue("view") || "logMagnitude",
+          centred: document.getElementById("centred").checked,
+        };
+      }
+
+      const VIEW_LABELS = {
+        logMagnitude: "Log magnitude spectrum",
+        magnitude: "Magnitude spectrum",
+        phase: "Phase spectrum",
+      };
+
+      const VIEW_TEXT = {
+        logMagnitude: {
+          formula: "S(k, l) = log(1 + |F(k, l)|), scaled to 0–255",
+          hint: "The log compresses the huge range of |F| so that weak frequency components become visible.",
+        },
+        magnitude: {
+          formula: "|F(k, l)| = √(Re² + Im²), scaled to 0–255",
+          hint: "Shown without a log, the zero-frequency term dominates and most of the spectrum looks black.",
+        },
+        phase: {
+          formula: "∠F(k, l) = atan2(Im, Re), −π … π mapped to 0–255",
+          hint: "The phase looks noisy but carries the spatial arrangement of image structures.",
+        },
+      };
+
+      function updateViewText() {
+        const params = readParams();
+        document.getElementById("viewFormula").textContent =
+          VIEW_TEXT[params.view].formula;
+        document.getElementById("viewHint").textContent =
+          VIEW_TEXT[params.view].hint +
+          (params.centred
+            ? " Zero frequency (the image mean) is at the centre."
+            : " Zero frequency (the image mean) is at the top-left corner.");
+      }
+
+      function resetControls() {
+        setChecked("operation", "forward");
+        setChecked("view", "logMagnitude");
+        document.getElementById("centred").checked = true;
+        updateViewText();
+      }
+
+      /* ---------- Fourier transform ---------- */
+
+      // 2-D DFT of a gray image (no padding). Returns real and imaginary
+      // parts as Float64Arrays in row-major order.
+      function forwardDft(gray) {
+        const real = new cv.Mat();
+        gray.convertTo(real, cv.CV_32F);
+        const planes = new cv.MatVector();
+        const imag = cv.Mat.zeros(gray.rows, gray.cols, cv.CV_32F);
+        planes.push_back(real);
+        planes.push_back(imag);
+        const complex = new cv.Mat();
+        cv.merge(planes, complex);
+        cv.dft(complex, complex);
+        cv.split(complex, planes);
+
+        const re = Float64Array.from(planes.get(0).data32F);
+        const im = Float64Array.from(planes.get(1).data32F);
+
+        real.delete();
+        imag.delete();
+        complex.delete();
+        planes.delete();
+        return { re, im, rows: gray.rows, cols: gray.cols };
+      }
+
+      // Move zero frequency from the top-left corner to the centre
+      // (index floor(N/2) along each axis), as fftshift does.
+      function shiftToCentre(values, rows, cols) {
+        const out = new Float64Array(values.length);
+        const dy = Math.floor(rows / 2);
+        const dx = Math.floor(cols / 2);
+        for (let y = 0; y < rows; y++) {
+          const ty = (y + dy) % rows;
+          for (let x = 0; x < cols; x++) {
+            out[ty * cols + ((x + dx) % cols)] = values[y * cols + x];
+          }
+        }
+        return out;
+      }
+
+      function spectrumValues(dft, view) {
+        const n = dft.re.length;
+        const values = new Float64Array(n);
+        for (let i = 0; i < n; i++) {
+          if (view === "phase") {
+            values[i] = Math.atan2(dft.im[i], dft.re[i]);
+          } else {
+            const magnitude = Math.hypot(dft.re[i], dft.im[i]);
+            values[i] = view === "logMagnitude" ? Math.log(1 + magnitude) : magnitude;
+          }
+        }
+        return values;
+      }
+
+      // Map values to an 8-bit gray Mat: phase uses its fixed −π…π range,
+      // magnitudes are min–max scaled.
+      function toDisplayMat(values, rows, cols, view) {
+        let min = -Math.PI;
+        let max = Math.PI;
+        if (view !== "phase") {
+          min = Infinity;
+          max = -Infinity;
+          for (const v of values) {
+            if (v < min) min = v;
+            if (v > max) max = v;
+          }
+        }
+        const range = max - min || 1;
+        const mat = new cv.Mat(rows, cols, cv.CV_8UC1);
+        for (let i = 0; i < values.length; i++) {
+          mat.data[i] = Math.round(((values[i] - min) / range) * 255);
+        }
+        return mat;
+      }
+
+      function spectrumMat(dft, view, centred) {
+        let values = spectrumValues(dft, view);
+        if (centred) values = shiftToCentre(values, dft.rows, dft.cols);
+        return toDisplayMat(values, dft.rows, dft.cols, view);
+      }
+
+      /* ---------- Run ---------- */
+
+      function clearSteps() {
+        document.getElementById("stepsGrid").innerHTML =
+          '<p class="hint">Run the transform to see the spectra here.</p>';
+      }
+
+      function addStepFigure(grid, src, caption) {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = caption;
+        const figcaption = document.createElement("figcaption");
+        figcaption.textContent = caption;
+        figure.append(img, figcaption);
+        grid.appendChild(figure);
+      }
+
+      function renderSpectrumInfo(dft) {
+        const dc = Math.hypot(dft.re[0], dft.im[0]);
+        let peak = 0;
+        for (let i = 1; i < dft.re.length; i++) {
+          peak = Math.max(peak, Math.hypot(dft.re[i], dft.im[i]));
+        }
+        const rows = [
+          ["Size", dft.cols + " × " + dft.rows],
+          ["|F(0, 0)|", Math.round(dc).toLocaleString("en-US")],
+          ["Mean pixel", (dc / dft.re.length).toFixed(1)],
+          ["Largest other |F|", Math.round(peak).toLocaleString("en-US")],
+        ];
+        document.getElementById("spectrumInfo").innerHTML = rows
+          .map((r) => "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>")
+          .join("");
+      }
+
+      // Transforms app.inputGray, renders the selected spectrum and all three
+      // views as intermediate results. Returns the params used.
+      function runTransform() {
+        const params = readParams();
+        const dft = forwardDft(app.inputGray);
+        const output = spectrumMat(dft, params.view, params.centred);
+
+        safeDelete(app.processedImage);
+        app.processedImage = output;
+        outputImg.src = matToDataUrl(output);
+        setDims("outputDims", output.cols, output.rows);
+
+        const grid = document.getElementById("stepsGrid");
+        grid.innerHTML = "";
+        addStepFigure(grid, inputImg.src, "Input");
+        ["logMagnitude", "magnitude", "phase"].forEach((view) => {
+          const mat = spectrumMat(dft, view, params.centred);
+          addStepFigure(grid, matToDataUrl(mat), VIEW_LABELS[view]);
+          mat.delete();
+        });
+        renderSpectrumInfo(dft);
+        return params;
+      }
+
+      function describeRun(params) {
+        return (
+          VIEW_LABELS[params.view] +
+          (params.centred ? ", centred" : ", not centred")
+        );
+      }
+
+      function setupControls() {
+        document
+          .querySelectorAll('input[name="view"], #centred')
+          .forEach((input) => input.addEventListener("change", updateViewText));
+        updateViewText();
+      }
+
+      function resetSimulation() {
+        safeDelete(app.inputGray);
+        safeDelete(app.processedImage);
+        app.inputGray = null;
+        app.processedImage = null;
+        app.selection = null;
+        app.dragging = false;
+        selectionOverlay.style.display = "none";
+
+        inputImg.src = "images/Layer-4.jpg";
+        outputImg.src = "images/Layer-5.jpg";
+        setDims("inputDims");
+        setDims("outputDims");
+        document.getElementById("spectrumInfo").innerHTML = "";
+        clearSteps();
+        resetControls();
+
+        setStatus(
+          "Simulation reset. Select a mosaic region, choose the spectrum to display, and click Run.",
+        );
+      }
+
+      function onOpenCvReady() {
+        setupMosaicSelection();
+
+        loadImage("images/Mosaic.png")
+          .then((mat) => {
+            app.mosaicMat = mat;
+            setStatus(
+              "OpenCV is ready. Drag or touch-drag on the mosaic to select an input region.",
+            );
+          })
+          .catch((err) => {
+            console.error(err);
+            setStatus("Could not load the mosaic image.", true);
+          });
+      }
+
+      document.getElementById("button1").addEventListener("click", () => {
+        mosaic.style.display = "block";
+        mosaic.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setStatus(
+          "Drag or touch-drag a rectangle over the mosaic to select an input region.",
+        );
+      });
+
+      document.getElementById("button2").addEventListener("click", () => {
+        if (!app.inputGray) {
+          setStatus(
+            "Please select a valid region from the mosaic first.",
+            true,
+          );
+          return;
+        }
+        const params = runTransform();
+        setStatus("Processing complete (" + describeRun(params) + ").");
+      });
+      document
+        .getElementById("button4")
+        .addEventListener("click", resetSimulation);
+
+      setupControls();
+
+      function waitForOpenCv(maxAttempts) {
+        let attempts = 0;
+        const timer = setInterval(() => {
+          attempts += 1;
+          if (window.cv && typeof window.cv.Mat !== "undefined") {
+            clearInterval(timer);
+            onOpenCvReady();
+            return;
+          }
+          if (attempts >= maxAttempts) {
+            clearInterval(timer);
+            setStatus("OpenCV did not initialize correctly.", true);
+          }
+        }, 250);
+      }
+
+      if (window.cv && typeof window.cv.Mat !== "undefined") {
+        onOpenCvReady();
+      } else {
+        waitForOpenCv(120);
+      }
+    </script>
+  </body>
+</html>

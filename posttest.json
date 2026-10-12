@@ -1,0 +1,158 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. The Fourier Transform provides an image representation in the",
+      "answers": {
+        "a": "Frequency domain",
+        "b": "File-storage domain",
+        "c": "Binary domain only",
+        "d": "Colour domain only"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. The Fourier Transform represents an image in terms of its frequency components, giving a frequency-domain representation.",
+        "b": "Incorrect. File storage is unrelated to the mathematical domain used to represent the image.",
+        "c": "Incorrect. Fourier transformation does not restrict an image representation to binary values.",
+        "d": "Incorrect. Fourier transformation is not limited to colour images or a colour-specific domain."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. Which functions form the basic building blocks of the Fourier Transform representation?",
+      "answers": {
+        "a": "Step functions",
+        "b": "Pure sinusoidal functions",
+        "c": "Ramp functions",
+        "d": "Polynomial functions only"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Step functions are not the sinusoidal basis functions used in the Fourier representation.",
+        "b": "Correct. The Fourier Transform represents signals using sinusoidal components with different frequencies.",
+        "c": "Incorrect. Ramp functions are not the basic basis functions of the Fourier Transform.",
+        "d": "Incorrect. Polynomial functions alone do not form the basic Fourier basis."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. If $f$ and $g$ are images, which expression represents the Fourier Transform of $f+g$?",
+      "answers": {
+        "a": "$F-G$",
+        "b": "$F \\cdot G$",
+        "c": "$G-F$",
+        "d": "$F+G$"
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "a": "Incorrect. This represents the transform relationship for a difference rather than a sum.",
+        "b": "Incorrect. Multiplication of the Fourier-domain representations is associated with the convolution relationship.",
+        "c": "Incorrect. This expression represents the transform of $g-f$, not $f+g$.",
+        "d": "Correct. By linearity, the Fourier Transform of $f+g$ is $F+G$."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. If $f$ and $g$ are two images and $f*g$ denotes convolution, which expression gives its Fourier Transform?",
+      "answers": {
+        "a": "$F+G$",
+        "b": "$F \\cdot G$",
+        "c": "$F-G$",
+        "d": "$G-F$"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Adding the transforms corresponds to addition of the input images.",
+        "b": "Correct. The convolution theorem gives the Fourier Transform of $f*g$ as the product $F \\cdot G$.",
+        "c": "Incorrect. Subtracting the transforms corresponds to subtraction of the input images.",
+        "d": "Incorrect. This represents a difference of the transforms rather than their product."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. Under the normalization used in the experiment, $F(0,0)$ corresponds to the",
+      "answers": {
+        "a": "Mean value of the spatial-domain image",
+        "b": "Mean value of the phase spectrum",
+        "c": "Maximum frequency component",
+        "d": "Image width"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. In the normalization used in the experiment, the zero-frequency component $F(0,0)$ represents the mean value of the spatial-domain image.",
+        "b": "Incorrect. The phase spectrum contains phase information and is not the quantity represented by $F(0,0)$ in this way.",
+        "c": "Incorrect. $F(0,0)$ is the zero-frequency component rather than the maximum-frequency component.",
+        "d": "Incorrect. Image width is a spatial dimension and is not represented by the zero-frequency component."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. What does the magnitude spectrum of a Fourier Transform primarily describe?",
+      "answers": {
+        "a": "The spatial coordinates of the original pixels",
+        "b": "The strength of the frequency components",
+        "c": "The file size of the image",
+        "d": "The number of rows in the image"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Pixel coordinates belong to the spatial representation rather than directly describing the magnitude spectrum.",
+        "b": "Correct. The magnitude spectrum indicates the strength or magnitude associated with the frequency components.",
+        "c": "Incorrect. File size is a storage property and is not represented by the magnitude spectrum.",
+        "d": "Incorrect. The number of image rows is a spatial dimension and is not what the magnitude spectrum describes."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. Which statement correctly describes the convolution theorem used with the Fourier Transform?",
+      "answers": {
+        "a": "Convolution in the spatial domain corresponds to multiplication in the frequency domain",
+        "b": "Convolution in the spatial domain corresponds to subtraction in the frequency domain",
+        "c": "Addition in the spatial domain corresponds to multiplication in the frequency domain",
+        "d": "Rotation in the spatial domain corresponds to subtraction in the frequency domain"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. The convolution theorem establishes the correspondence between spatial-domain convolution and frequency-domain multiplication.",
+        "b": "Incorrect. Subtraction is not the frequency-domain operation associated with convolution under this theorem.",
+        "c": "Incorrect. Spatial-domain addition follows the linearity property rather than the convolution theorem.",
+        "d": "Incorrect. Spatial rotation is not related to subtraction in the frequency domain by the convolution theorem."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. If an image has mainly slowly varying intensity changes, its Fourier representation is expected to contain relatively stronger",
+      "answers": {
+        "a": "High-frequency components",
+        "b": "Low-frequency components",
+        "c": "Only image-dimension information",
+        "d": "Only colour-channel information"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. High-frequency components are associated with rapid spatial variations rather than slowly varying intensity changes.",
+        "b": "Correct. Slowly varying intensity changes correspond primarily to low-frequency components.",
+        "c": "Incorrect. Image dimensions do not describe the frequency content of intensity variations.",
+        "d": "Incorrect. The statement concerns spatial frequency content rather than colour-channel information."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. Which statement best explains why Fourier-domain multiplication is useful in image processing?",
+      "answers": {
+        "a": "It converts every image directly into a binary image",
+        "b": "It eliminates the need for any image representation",
+        "c": "It provides a frequency-domain way to perform the operation corresponding to spatial convolution",
+        "d": "It changes the number of pixels in the image"
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "a": "Incorrect. Fourier-domain multiplication does not inherently produce a binary image.",
+        "b": "Incorrect. Fourier-domain processing still requires an image representation and does not eliminate image information.",
+        "c": "Correct. Through the convolution theorem, multiplication in the frequency domain corresponds to convolution in the spatial domain.",
+        "d": "Incorrect. Fourier-domain multiplication does not by itself change the number of pixels in the image."
+      },
+      "difficulty": "advanced"
+    }
+  ]
+}

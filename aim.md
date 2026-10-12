@@ -1,0 +1,1 @@
+The aim of this experiment is to study the Fourier transform as a representation of an image in the frequency domain, and to understand the relationship between the spatial-domain image and its spatial-frequency representation.
