@@ -1,19 +1,158 @@
-[
-{"question":"1. If f ang g are two images, Fourier transform of f*g is",
-"answers":{
-            "a":"F.G",
-            "b":"F+G",
-            "c":"F-G",
-            "d":"G-F"
-          },
-"correctAnswer":"a"},
-
-{"question":"2. F[0,0] is equal to",
-"answers":{
-            "a":"mean to the spatial image",
-            "b":"mean of the fourier image",
-            "c":"mean of the magnitude spectrum",
-            "d":"mean of the phase spectrum"
-          }, 
-"correctAnswer":"a"}
-]
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. What is the main purpose of the Fourier Transform in image processing?",
+      "answers": {
+        "a": "To represent an image in terms of its frequency components",
+        "b": "To change the spatial dimensions of an image",
+        "c": "To convert every image into a binary image",
+        "d": "To remove all pixel values from an image"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. The Fourier Transform provides a representation of an image in terms of its frequency components.",
+        "b": "Incorrect. Changing spatial dimensions is not the primary purpose of the Fourier Transform.",
+        "c": "Incorrect. Fourier transformation does not inherently convert an image into a binary image.",
+        "d": "Incorrect. The transform changes the representation of image information rather than removing the pixel information."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. The basic functions used to represent signals in the Fourier Transform are",
+      "answers": {
+        "a": "Step functions only",
+        "b": "Ramp functions only",
+        "c": "Pure sinusoidal functions",
+        "d": "Tangential functions"
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "a": "Incorrect. Step functions are not the basic basis functions identified for the Fourier Transform.",
+        "b": "Incorrect. Ramp functions are not the basic basis functions identified for the Fourier Transform.",
+        "c": "Correct. The Fourier Transform represents signals using sinusoidal components with different frequencies.",
+        "d": "Incorrect. Tangential functions are not the basic basis functions used in the Fourier Transform."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. In the frequency-domain representation of an image, the Fourier Transform describes",
+      "answers": {
+        "a": "Only the spatial coordinates of the pixels",
+        "b": "The frequency components present in the image",
+        "c": "Only the dimensions of the image",
+        "d": "Only the number of pixels in the image"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Spatial coordinates describe pixel locations and are not the frequency-domain representation.",
+        "b": "Correct. The Fourier Transform expresses the image in terms of its frequency components.",
+        "c": "Incorrect. Image dimensions describe the size of the image and do not constitute its frequency representation.",
+        "d": "Incorrect. The number of pixels alone does not describe the frequency components of an image."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. If $f$ and $g$ are two images and $F$ and $G$ are their Fourier Transforms, the Fourier Transform of their sum is",
+      "answers": {
+        "a": "$F-G$",
+        "b": "$F+G$",
+        "c": "$F \\cdot G$",
+        "d": "$G-F$"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Subtracting the transforms corresponds to a difference of the input images, not their sum.",
+        "b": "Correct. By the linearity property of the Fourier Transform, the transform of $f+g$ is $F+G$.",
+        "c": "Incorrect. Multiplication of the transforms is associated with a convolution relationship rather than the sum of the images.",
+        "d": "Incorrect. This expression represents the transform of $g-f$, not the transform of $f+g$."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. If $f$ and $g$ are two images and $f*g$ denotes their convolution, the Fourier Transform of $f*g$ is",
+      "answers": {
+        "a": "$F+G$",
+        "b": "$F-G$",
+        "c": "$F \\cdot G$",
+        "d": "$G-F$"
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "a": "Incorrect. Addition of Fourier Transforms corresponds to addition of the input images under the linearity property.",
+        "b": "Incorrect. Subtraction of Fourier Transforms corresponds to subtraction of the input images under the linearity property.",
+        "c": "Correct. The convolution theorem states that convolution in the spatial domain corresponds to multiplication of the Fourier Transforms.",
+        "d": "Incorrect. This expression represents a difference between the transforms rather than the product associated with convolution."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. Under the normalization used in the experiment, what does the zero-frequency component $F(0,0)$ represent for an image?",
+      "answers": {
+        "a": "The mean value of the spatial-domain image",
+        "b": "The mean value of the phase spectrum",
+        "c": "The maximum spatial frequency in the image",
+        "d": "The image dimensions"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. In the normalization used for this experiment, the zero-frequency component $F(0,0)$ represents the mean value of the spatial-domain image.",
+        "b": "Incorrect. The phase spectrum describes phase information and is not represented by the zero-frequency component in this way.",
+        "c": "Incorrect. The zero-frequency component corresponds to zero frequency rather than the maximum spatial frequency.",
+        "d": "Incorrect. Image dimensions are separate from the value of the zero-frequency Fourier component."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. Which property of the Fourier Transform explains why the transform of $f+g$ can be obtained by adding the transforms of $f$ and $g$?",
+      "answers": {
+        "a": "Convolution property",
+        "b": "Rotation property",
+        "c": "Linearity property",
+        "d": "Scaling of image dimensions"
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "a": "Incorrect. The convolution property relates convolution in one domain to multiplication in the other domain.",
+        "b": "Incorrect. Image rotation is a spatial transformation and does not describe the addition relationship between Fourier Transforms.",
+        "c": "Correct. Linearity gives the relationship $\\mathcal{F}\\{f+g\\}=F+G$.",
+        "d": "Incorrect. Changing image dimensions does not explain the additive relationship between transforms."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. If an image contains a strong slowly varying intensity component, which part of its Fourier representation is most directly associated with that component?",
+      "answers": {
+        "a": "High-frequency components",
+        "b": "Zero-frequency and low-frequency components",
+        "c": "Only the phase spectrum at maximum frequency",
+        "d": "Only the image dimensions"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. High-frequency components are associated with rapid spatial variations rather than slowly varying intensity changes.",
+        "b": "Correct. Slowly varying intensity changes are represented primarily by low-frequency components, including the zero-frequency component.",
+        "c": "Incorrect. The description concerns frequency content and cannot be restricted to a phase value at maximum frequency.",
+        "d": "Incorrect. Image dimensions do not represent the frequency content of an intensity variation."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. What does multiplication of two Fourier-domain representations correspond to in the spatial domain, when the corresponding Fourier Transform property is applied?",
+      "answers": {
+        "a": "Addition of the two spatial-domain images",
+        "b": "Subtraction of the two spatial-domain images",
+        "c": "Rotation of one spatial-domain image",
+        "d": "Convolution of the corresponding spatial-domain images"
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "a": "Incorrect. Addition in the spatial domain corresponds to addition of the Fourier-domain representations.",
+        "b": "Incorrect. Subtraction in the spatial domain corresponds to subtraction of the Fourier-domain representations.",
+        "c": "Incorrect. Multiplication of Fourier-domain representations does not represent spatial rotation.",
+        "d": "Correct. The convolution theorem relates multiplication in the Fourier domain to convolution in the spatial domain."
+      },
+      "difficulty": "advanced"
+    }
+  ]
+}
